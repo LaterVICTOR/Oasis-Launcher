@@ -1,0 +1,52 @@
+{
+    "name": "oni-developer",
+    "preductname": "Oni Launcher",
+    "version": "1.0.6",
+    "description": "Launcher V2",
+    "main": "src/app.js",
+    "url": "https://launcher.latervictor.dev/",
+    "author": {
+        "name": "LaterVICTOR",
+        "email": "latervictormc@gmail.com",
+        "url": "https://github.com/LaterVICTOR"
+    },
+    "engines": {
+        "node": "^18.x.x"
+    },
+    "scripts": {
+        "start": "cross-env-shell NODE_ENV=dev electron .",
+        "dev": "cross-env-shell DEV_TOOL=open nodemon --exec npm start",
+        "build": "node build.js --obf=true --build=platform",
+        "icon": "node build.js --icon=https://media.discordapp.net/attachments/1088618627634307104/1204582457702088734/image.png?ex=65d541d5&is=65c2ccd5&hm=0dc2a01567bc62c492fe2db3a10866e9555998010b5a95cf04779781d6d9c4a3&=&format=webp&quality=lossless&width=481&height=468"
+    },
+    "license": "CCANC",
+    "nodemonConfig": {
+        "ext": "js,html,css",
+        "ignore": "**/test"
+    },
+    "dependencies": {
+        "discord-rpc": "^4.0.1",
+        "electron-updater": "^6.1.1",
+        "minecraft-java-core": "^3.7.2",
+        "adm-zip": "^0.5.10",
+        "axios": "^1.3.3",
+        "node-bdd": "^2.0.3",
+        "node-fetch": "^2.6.13",
+        "ping": "^0.4.2",
+        "socket.io-client": "^4.6.1",
+        "sweetalert": "^2.1.2"
+    },
+    "devDependencies": {
+        "cross-env": "^7.0.3",
+        "electron": "^26.0.0",
+        "electron-builder": "^24.6.3",
+        "javascript-obfuscator": "^4.0.2",
+        "jimp": "^0.22.10",
+        "nodemon": "^3.0.1",
+        "png2icons": "^2.0.1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/LaterVICTOR/Oni-Studio.git"
+    }
+}
