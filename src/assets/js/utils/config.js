@@ -25,9 +25,10 @@ class Config {
         let instancesList = []
         instances = Object.entries(instances)
 
-        for (let [name, data] of instances) {
+        for (let [name, data, background] of instances) {
             let instance = data
             instance.name = name
+            instance.background = background
             instancesList.push(instance)
         }
         return instancesList
