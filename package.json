@@ -1,8 +1,8 @@
 {
-    "name": "oni-developer",
-    "preductname": "Oni Launcher",
-    "version": "1.0.6",
-    "description": "Launcher V2",
+    "name": "oasis-developer",
+    "preductname": "Oasis Launcher",
+    "version": "2.0.0",
+    "description": "Creado Por LaterVICTOR & Drolet",
     "main": "src/app.js",
     "url": "https://launcher.latervictor.dev/",
     "author": {
@@ -17,7 +17,7 @@
         "start": "cross-env-shell NODE_ENV=dev electron .",
         "dev": "cross-env-shell DEV_TOOL=open nodemon --exec npm start",
         "build": "node build.js --obf=true --build=platform",
-        "icon": "node build.js --icon=https://media.discordapp.net/attachments/1088618627634307104/1204582457702088734/image.png?ex=65d541d5&is=65c2ccd5&hm=0dc2a01567bc62c492fe2db3a10866e9555998010b5a95cf04779781d6d9c4a3&=&format=webp&quality=lossless&width=481&height=468"
+        "icon": "node build.js --icon=https://media.discordapp.net/attachments/1204585093545463820/1207591769961668628/OASIS_SOLO.png?ex=65e03479&is=65cdbf79&hm=fceefc7cdab8af9ee398166727e5a9f39632f8b0b5396e8f67e86799d7b26478&=&format=webp&quality=lossless&width=473&height=473"
     },
     "license": "CCANC",
     "nodemonConfig": {
