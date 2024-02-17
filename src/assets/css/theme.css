@@ -1,4 +1,4 @@
-.global {
+.global 
     --element-color: #ffbb00;
     --transition: all 0.5s cubic-bezier(1, 0.46, 0, 1.29);
     --dark-color: #292929;
