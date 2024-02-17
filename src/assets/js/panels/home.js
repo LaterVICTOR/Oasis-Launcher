@@ -63,14 +63,7 @@ class Home {
 
         instancePopup.addEventListener('click', async e => {
             let configClient = await this.db.readData('configClient')
-            let instancesList = await config.getInstanceList()
-
             let instanceSelect = configClient.instance_selct
-            let background
-            let body = document.body;
-            body.style.backgroundImage = background
-
-            background = `linear-gradient(#00000080, #00000080), url(${instance.background})`;
 
             if (e.target.classList.contains('instance-elements')) {
                 let newInstanceSelect = e.target.id
