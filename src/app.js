@@ -111,7 +111,7 @@ ipcMain.on('new-status-discord-jugando', async (event, status) => {
                 },
                 buttons: [
                     {
-                        label: 'Visitar OniStudio',
+                        label: 'Visitar Oasis Studio',
                         url: 'https://latervictor.dev/',
                     },
                ],
