@@ -1,56 +1,67 @@
-@import "font.css";
-@import 'theme.css';
-
 body {
-    background-color: var(--background);
+    border-radius: 50px;
+    background-color: none;
     font-family: "Poppins";
     letter-spacing: 0px;
     -webkit-app-region: drag;
     user-select: none;
-}
-
-img {
+  }
+  
+  img {
     -webkit-user-drag: none;
     user-select: none;
-}
-
-.splash {
+  }
+  
+  .main-app{
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border-radius: 10px;
+    background: url("https://cdn.discordapp.com/attachments/1059531172234920089/1187846407684640951/casd1.png?ex=65985f2c&is=6585ea2c&hm=19e8bbc61efb7d2575154868bb7e80713de46fccff889221a068ff42d5c088a5&");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+  
+  
+  
+  .img-background {
     position: absolute;
-    top: 180px;
-    left: 50%;
-    transform: translate(-50%);
-    width: 140px;
-    height: 140px;
-    transition: opacity .3s, top 1.5s;
-    opacity: 0;
-}
-
-.splash.opacity {
+    top: 50px;
+    left: 7%;
+    width: 340px;
+    height: 170px;
+    border-radius: 10px;
+  }
+  
+  .splash.opacity {
     opacity: 1;
-}
-
-.splash.translate {
+  }
+  
+  .splash.translate {
     top: 129px;
-}
-
-.splash-message {
+  }
+  
+  .splash-message {
     position: absolute;
-    top: 289px;
+    top: 270px;
     left: 0px;
     width: 400px;
-    font: normal normal bold 19px/29px Poppins;
+    font-family: verdana;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 20px;
+    color: rgb(255, 255, 255);
     text-align: center;
     letter-spacing: 0px;
-    transition: opacity 1.5s;
-    color: var(--color);
+    transition: opacity 1s;
     opacity: 0;
-}
-
-.splash-message.opacity {
+  }
+  
+  .splash-message.opacity {
     opacity: 1;
-}
-
-.splash-author {
+  }
+  
+  .splash-author {
     position: absolute;
     top: 326px;
     left: 0px;
@@ -58,56 +69,112 @@ img {
     text-align: center;
     transition: opacity 1.5s;
     font: normal normal normal 9px/13px Poppins;
-    color: var(--color);
+    color: rgb(255, 255, 255);
     opacity: 0;
-}
-
-.splash-author .author {
-    font: normal normal bold 9px/13px Poppins;
-}
-
-.splash-author.opacity {
-    opacity: 1;
-}
-
-.message {
+    visibility: hidden;
+  }
+  
+  .splash-author.author {
+    font: normal normal bold 9px/10px Poppins;
+  }
+  
+  .splash-author.opacity {
+    opacity: 0;
+  }
+  
+  .message {
     position: absolute;
     top: 347px;
     left: 0px;
     width: 400px;
     text-align: center;
-    transition: opacity 1.5s;
-    font: normal normal bold 18px/27px Poppins;
-    color: var(--color);
+    transition: opacity 3s;
+    font-family: "Advent Pro", sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 27px;
+    letter-spacing: 5px;
+    word-spacing: -1px;
+    color: hsl(0, 0%, 100%);
+    font-size: 18px;
+    color: hsl(0, 0%, 100%);
     opacity: 0;
-}
-
-.message.opacity {
+  }
+  
+  .message.opacity {
     opacity: 1;
-}
-
-.progress {
+  }
+  
+  progress {
     position: absolute;
-    top: 410px;
+    top: 440px;
     left: 106px;
     width: 189px;
     height: 10px;
     appearance: none;
     transition: opacity .2s;
     opacity: 0;
-}
-
-.show {
+  }
+  
+  progress.show {
     opacity: 1;
-}
-
-.progress::-webkit-progress-bar {
-    background-color: var(--background);
-    border: solid 1px var(--element-color);
+  }
+  
+  progress::-webkit-progress-bar {
+    background-color: rgb(255, 255, 255);
     border-radius: 10px;
-}
-
-.progress::-webkit-progress-value {
-    background-color: var(--element-color);
+  }
+  
+  progress::-webkit-progress-value {
+    background-color: #6b2a91;
     border-radius: 10px;
-}
+  }
+  
+  
+  .loader {
+    position: absolute;
+    top: 80%;
+    left: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 44.8px;
+    height: 44.8px;
+    color: #fcfcfc;
+    background: radial-gradient(11.2px,currentColor 94%,#0000);
+  }
+  
+  .loader:before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 10%;
+    background: radial-gradient(10.08px at bottom right,#0000 94%,currentColor) top    left,
+            radial-gradient(10.08px at bottom left ,#0000 94%,currentColor) top    right,
+            radial-gradient(10.08px at top    right,#0000 94%,currentColor) bottom left,
+            radial-gradient(10.08px at top    left ,#0000 94%,currentColor) bottom right;
+    background-size: 22.4px 22.4px;
+    background-repeat: no-repeat;
+    animation: loader 1.5s infinite cubic-bezier(0.3,1,0,1);
+    box-shadow: 0 0 30px #0000008f;
+  }
+  
+  @keyframes loader {
+    33% {
+      inset: -11.2px;
+      transform: rotate(0deg);
+      box-shadow: 0 0 30px #825914;
+    }
+  
+    66% {
+      inset: -11.2px;
+      transform: rotate(90deg);
+      box-shadow: 0 0 30px #ffffff;
+    }
+  
+    100% {
+      inset: 0;
+      transform: rotate(90deg);
+      box-shadow: 0 0 30px #563b0d;
+    }
+  }

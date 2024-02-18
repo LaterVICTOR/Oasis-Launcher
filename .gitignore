@@ -1,4 +1,8 @@
+# Generated
 node_modules
-data/.OniStudio
+app
+test
+dist
+node-v*
 data
-data/Launcher
+.DS_Store

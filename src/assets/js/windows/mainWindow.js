@@ -29,7 +29,6 @@ function createWindow() {
         icon: `./src/assets/images/icon.${os.platform() === "win32" ? "ico" : "png"}`,
         frame: os.platform() !== 'win32',
         show: false,
-        transparent: true,
         webPreferences: {
             contextIsolation: false,
             nodeIntegration: true

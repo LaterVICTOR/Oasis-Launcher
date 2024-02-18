@@ -1,7 +1,7 @@
 {
     "name": "oasis-developer",
     "preductname": "Oasis Launcher",
-    "version": "2.0.2",
+    "version": "2.0.3",
     "description": "Creado Por LaterVICTOR & Drolet",
     "main": "src/app.js",
     "url": "https://launcher.latervictor.dev/",
@@ -10,14 +10,11 @@
         "email": "latervictormc@gmail.com",
         "url": "https://github.com/LaterVICTOR"
     },
-    "engines": {
-        "node": "^18.x.x"
-    },
     "scripts": {
         "start": "cross-env-shell NODE_ENV=dev electron .",
         "dev": "cross-env-shell DEV_TOOL=open nodemon --exec npm start",
-        "build": "node build.js --obf=true --build=platform",
-        "icon": "node build.js --icon=https://launcher.latervictor.dev/OASIS_SOLO.png"
+        "build": "node build.js --obf=false --build=platform",
+        "icon": "node build.js --icon=https://raw.githubusercontent.com/luuxis/Selvania-Launcher/master/src/assets/images/icon.png"
     },
     "license": "CCANC",
     "nodemonConfig": {
@@ -26,21 +23,17 @@
     },
     "dependencies": {
         "discord-rpc": "^4.0.1",
-        "electron-updater": "^6.1.1",
-        "minecraft-java-core": "^3.7.2",
-        "adm-zip": "^0.5.10",
-        "axios": "^1.3.3",
+        "electron-updater": "^6.1.4",
+        "minecraft-java-core": "^3.8.1",
         "node-bdd": "^2.0.3",
-        "node-fetch": "^2.6.13",
-        "ping": "^0.4.2",
-        "socket.io-client": "^4.6.1",
-        "sweetalert": "^2.1.2"
+        "node-fetch": "^2.7.0",
+        "xml-js": "^1.6.11"
     },
     "devDependencies": {
         "cross-env": "^7.0.3",
-        "electron": "^26.0.0",
-        "electron-builder": "^24.6.3",
-        "javascript-obfuscator": "^4.0.2",
+        "electron": "^27.0.4",
+        "electron-builder": "^24.6.4",
+        "javascript-obfuscator": "^4.1.0",
         "jimp": "^0.22.10",
         "nodemon": "^3.0.1",
         "png2icons": "^2.0.1"
