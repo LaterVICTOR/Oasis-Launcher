@@ -33,7 +33,7 @@ class Login {
 
         microsoftBtn.addEventListener("click", () => {
             popupLogin.openPopup({
-                title: 'onectando con Microsoft',
+                title: 'Conectando con Microsoft',
                 content: 'Esperando respuesta de la sesion..',
                 color: 'var(--color)'
             });
@@ -49,7 +49,7 @@ class Login {
 
             }).catch(err => {
                 popupLogin.openPopup({
-                    title: 'Erreur',
+                    title: 'Error',
                     content: err,
                     options: true
                 });

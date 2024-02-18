@@ -50,8 +50,8 @@ class Settings {
                 let id = e.target.id
                 if (e.target.classList.contains('account')) {
                     popupAccount.openPopup({
-                        title: 'Connexion',
-                        content: 'Veuillez patienter...',
+                        title: 'AVISO',
+                        content: 'Espere por favor...',
                         color: 'var(--color)'
                     })
 
