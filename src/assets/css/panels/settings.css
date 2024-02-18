@@ -1,6 +1,5 @@
 .settings .container {
     display: flex;
-    transition: 300ms;
     height: 100%;
 }
 
@@ -25,7 +24,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-radius: 18px;
 }
 
 .nav-box #save {

@@ -1,7 +1,6 @@
 
 
 const { ipcRenderer } = require('electron')
-const { Status } = require('minecraft-java-core')
 const fs = require('fs');
 const pkg = require('../package.json');
 
@@ -31,7 +30,7 @@ async function setBackground(theme) {
         let Background = backgrounds[Math.floor(Math.random() * backgrounds.length)];
         background = `linear-gradient(#00000000, #00000000), url(./assets/images/background/${theme ? 'dark' : 'light'}/${Background})`;
     }
-    body.style.backgroundImage = background ? background : theme ? '#000' : '#fff';
+    body.style.backgroundImage = background ? background : theme ? '#000' : '#000';
     body.style.backgroundSize = 'cover';
 }
 
@@ -72,6 +71,7 @@ async function accountSelect(data) {
     if (activeAccount) activeAccount.classList.toggle('account-select');
     account.classList.add('account-select');
 }
+
 
 export {
     appdata as appdata,

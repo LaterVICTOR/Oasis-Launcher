@@ -15,7 +15,7 @@ const fs = require('fs');
 class Launcher {
     async init() {
         this.initLog();
-        console.log('Iniciando...');
+        console.log('Initializing Launcher...');
         this.shortcut()
         await setBackground()
         if (process.platform == 'win32') this.initFrame();
@@ -25,8 +25,20 @@ class Launcher {
         await this.initConfigClient();
         this.createPanels(Login, Home, Settings);
         this.startLauncher();
+        this.refresh();
     }
 
+    async refresh() {
+        let background;
+        let body = document.body;
+        let configClient = await this.db.readData('configClient');
+        let instance = await config.getInstanceList();
+        let options = instance.find(i => i.name == configClient.instance_selct);
+    
+        background = `linear-gradient(#00000000, #00000000), url(${options.background})`;
+        body.style.backgroundImage = background;
+        body.style.backgroundSize = 'cover';
+    }
     initLog() {
         document.addEventListener('keydown', e => {
             if (e.ctrlKey && e.shiftKey && e.keyCode == 73 || e.keyCode == 123) {
@@ -57,7 +69,7 @@ class Launcher {
     }
 
     initFrame() {
-        console.log('Iniciando Launcher...')
+        console.log('Initializing Frame...')
         document.querySelector('.frame').classList.toggle('hide')
         document.querySelector('.dragbar').classList.toggle('hide')
 
@@ -65,15 +77,13 @@ class Launcher {
             ipcRenderer.send('main-window-minimize');
         });
 
-
-        
         document.querySelector('#close').addEventListener('click', () => {
             ipcRenderer.send('main-window-close');
         })
     }
 
     async initConfigClient() {
-        console.log('Iniciando la configuracion del Launcher...')
+        console.log('Initializing Config Client...')
         let configClient = await this.db.readData('configClient')
 
         if (!configClient) {
@@ -94,7 +104,7 @@ class Launcher {
                     }
                 },
                 launcher_config: {
-                    download_multi: 5,
+                    download_multi: 30,
                     theme: 'auto',
                     closeLauncher: 'close-launcher',
                     intelEnabledMac: true
@@ -106,7 +116,7 @@ class Launcher {
     createPanels(...panels) {
         let panelsElem = document.querySelector('.panels')
         for (let panel of panels) {
-            console.log(`Iniciando ${panel.name} Panel...`);
+            console.log(`Initializing ${panel.name} Panel...`);
             let div = document.createElement('div');
             div.classList.add('panel', panel.id)
             div.innerHTML = fs.readFileSync(`${__dirname}/panels/${panel.id}.html`, 'utf8');
@@ -129,10 +139,10 @@ class Launcher {
                     continue
                 }
                 if (account.meta.type === 'Xbox') {
-                    console.log(`Tipo de cuenta: ${account.meta.type} | Usuario: ${account.name}`);
+                    console.log(`Account Type: ${account.meta.type} | Username: ${account.name}`);
                     popupRefresh.openPopup({
-                        title: 'Conectando y verificando.',
-                        content: `Tipo de cuenta: ${account.meta.type} | Usuario: ${account.name}`,
+                        title: 'Connexion',
+                        content: `Refresh account Type: ${account.meta.type} | Username: ${account.name}`,
                         color: 'var(--color)',
                         background: false
                     });
@@ -154,10 +164,10 @@ class Launcher {
                     await addAccount(refresh_accounts)
                     if (account_ID == account_selected) accountSelect(refresh_accounts)
                 } else if (account.meta.type == 'AZauth') {
-                    console.log(`Tipo de cuenta: ${account.meta.type} | Usuario: ${account.name}`);
+                    console.log(`Account Type: ${account.meta.type} | Username: ${account.name}`);
                     popupRefresh.openPopup({
-                        title: 'Conectando y verificando.',
-                        content: `Tipo de cuenta: ${account.meta.type} | Usuario: ${account.name}`,
+                        title: 'Connexion',
+                        content: `Refresh account Type: ${account.meta.type} | Username: ${account.name}`,
                         color: 'var(--color)',
                         background: false
                     });
@@ -178,10 +188,10 @@ class Launcher {
                     await addAccount(refresh_accounts)
                     if (account_ID == account_selected) accountSelect(refresh_accounts)
                 } else if (account.meta.type == 'Mojang') {
-                    console.log(`Tipo de cuenta: ${account.meta.type} | Usuario: ${account.name}`);
+                    console.log(`Account Type: ${account.meta.type} | Username: ${account.name}`);
                     popupRefresh.openPopup({
-                        title: 'Conectando y verificando.',
-                        content: `Tipo de cuenta: ${account.meta.type} | Usuario: ${account.name}`,
+                        title: 'Connexion',
+                        content: `Refresh account Type: ${account.meta.type} | Username: ${account.name}`,
                         color: 'var(--color)',
                         background: false
                     });
@@ -212,7 +222,7 @@ class Launcher {
                     await addAccount(refresh_accounts)
                     if (account_ID == account_selected) accountSelect(refresh_accounts)
                 } else {
-                    console.error(`[Account] ${account.name}: Tipo de cuenta no encontrada.`);
+                    console.error(`[Account] ${account.name}: Account Type Not Found`);
                     this.db.deleteData('accounts', account_ID)
                     if (account_ID == account_selected) {
                         configClient.account_selected = null

@@ -1,8 +1,8 @@
 # module du helios launcher
-name: Launcher Building
+name: Launcher Build
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   create-release:
@@ -13,7 +13,7 @@ jobs:
 
       - name: Get version
         run: echo "version=$(jq -r .version package.json)" >> $GITHUB_ENV
-
+      
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1

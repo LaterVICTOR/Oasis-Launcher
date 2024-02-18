@@ -1,5 +1,6 @@
 
 const { ipcRenderer } = require('electron');
+const os = require('os');
 import { config, database } from './utils.js';
 
 let dev = process.env.NODE_ENV === 'dev';
@@ -25,7 +26,9 @@ class Splash {
 
     async startAnimation() {
         let splashes = [
-            { "message": "" }
+            { "message": "Je... vie...", "author": "Luuxis" },
+            { "message": "Salut je suis du code.", "author": "Luuxis" },
+            { "message": "Linux n'est pas un os, mais un kernel.", "author": "Luuxis" }
         ];
         let splash = splashes[Math.floor(Math.random() * splashes.length)];
         this.splashMessage.textContent = splash.message;
@@ -45,28 +48,29 @@ class Splash {
 
     async checkUpdate() {
         if (dev) return this.startLauncher();
-        this.setStatus(`Revisando version...`);
+        this.setStatus(`Buscando una actualización...`);
 
-        ipcRenderer.invoke('update-app').then(update => {
-            console.log(update);
-        }).catch(err => {
-            return this.shutdown(`Error al buscar actualizaciones.`);
+        ipcRenderer.invoke('update-app').then().catch(err => {
+            return this.shutdown(`error al buscar actualización:<br>${err.message}`);
         });
 
-
         ipcRenderer.on('updateAvailable', () => {
-            this.setStatus(`Actualizando.. `);
-            this.toggleProgress();
+            this.setStatus(`¡Actualización disponible!`);
             ipcRenderer.send('start-update');
         })
 
+        ipcRenderer.on('error', (event, err) => {
+            if (err) return this.shutdown(`${err.message}`);
+        })
+
         ipcRenderer.on('download-progress', (event, progress) => {
+            this.toggleProgress();
             ipcRenderer.send('update-window-progress', { progress: progress.transferred, size: progress.total })
             this.setProgress(progress.transferred, progress.total);
         })
 
         ipcRenderer.on('update-not-available', () => {
-            console.error("Tienes la version mas reciente.");
+            console.error("Actualización no disponible");
             this.maintenanceCheck();
         })
     }
@@ -77,21 +81,21 @@ class Splash {
             this.startLauncher();
         }).catch(e => {
             console.error(e);
-            return this.shutdown("No se detecto conexion a<br>Internet.");
+            return this.shutdown("No se detectó conexión a Internet,<br>inténtalo de nuevo más tarde.");
         })
     }
 
     startLauncher() {
-        this.setStatus(`Iniciando`);
+        this.setStatus(`Iniciando el lanzador`);
         ipcRenderer.send('main-window-open');
         ipcRenderer.send('update-window-close');
     }
 
     shutdown(text) {
-        this.setStatus(`${text}<br>Cerrando 5s`);
+        this.setStatus(`${text}<br>Cerrando en 5 segundos`);
         let i = 4;
         setInterval(() => {
-            this.setStatus(`${text}<br>Cerrando ${i--}s`);
+            this.setStatus(`${text}<br>Parar en ${i--}s`);
             if (i < 0) ipcRenderer.send('update-window-close');
         }, 1000);
     }

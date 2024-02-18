@@ -11,23 +11,16 @@ class Login {
         this.db = new database();
 
         if (typeof this.config.online == 'boolean') {
-            if (this.config.online) {
-                this.getMicrosoft()
-            } else {
-                this.getCrack()
-                this.getMicrosoftOffline()
-            }
+            this.config.online ? this.getMicrosoft() : this.getCrack()
         } else if (typeof this.config.online == 'string') {
             if (this.config.online.match(/^(http|https):\/\/[^ "]+$/)) {
                 this.getAZauth();
             }
         }
-
-        document.querySelectorAll('.cancel-login').forEach(e => {
-            e.addEventListener('click', (e) => {
-                e.target.style.display = 'none'
-                changePanel('settings')
-            })
+        
+        document.querySelector('.cancel-home').addEventListener('click', () => {
+            document.querySelector('.cancel-home').style.display = 'none'
+            changePanel('settings')
         })
     }
 
@@ -40,7 +33,7 @@ class Login {
 
         microsoftBtn.addEventListener("click", () => {
             popupLogin.openPopup({
-                title: 'Conectando con Microsoft',
+                title: 'onectando con Microsoft',
                 content: 'Esperando respuesta de la sesion..',
                 color: 'var(--color)'
             });
@@ -56,39 +49,7 @@ class Login {
 
             }).catch(err => {
                 popupLogin.openPopup({
-                    title: 'Error del Launcher',
-                    content: err,
-                    options: true
-                });
-            });
-        })
-    }
-
-
-    async getMicrosoftOffline() {
-        console.log('Initializing Microsoft login...');
-        let popupLogin = new popup();
-        let microsoftBtn = document.querySelector('.connect-microsoft');
-
-        microsoftBtn.addEventListener("click", () => {
-            popupLogin.openPopup({
-                title: 'Conectando con Microsoft',
-                content: 'Esperando respuesta de la sesion..',
-                color: 'var(--color)'
-            });
-
-            ipcRenderer.invoke('Microsoft-window', this.config.client_id).then(async account_connect => {
-                if (account_connect == 'cancel' || !account_connect) {
-                    popupLogin.closePopup();
-                    return;
-                } else {
-                    await this.saveData(account_connect)
-                    popupLogin.closePopup();
-                }
-
-            }).catch(err => {
-                popupLogin.openPopup({
-                    title: 'Error del Launcher',
+                    title: 'Erreur',
                     content: err,
                     options: true
                 });
@@ -100,7 +61,6 @@ class Login {
         console.log('Initializing offline login...');
         let popupLogin = new popup();
         let loginOffline = document.querySelector('.login-offline');
-        let format = /^[!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?]*$/;
 
         let emailOffline = document.querySelector('.email-offline');
         let connectOffline = document.querySelector('.connect-offline');
@@ -118,17 +78,8 @@ class Login {
 
             if (emailOffline.value.match(/ /g)) {
                 popupLogin.openPopup({
-                    title: 'Error',
-                    content: 'Tu apodo no debe contener espacios.',
-                    options: true
-                });
-                return;
-            }
-
-            if(emailOffline.value.match(format)) {
-                popupLogin.openPopup({
-                    title: 'Error',
-                    content: 'Su apodo debe contener sólo caracteres alfanuméricos.',
+                    title: 'Erreur',
+                    content: 'Votre pseudo ne doit pas contenir d\'espaces.',
                     options: true
                 });
                 return;
@@ -167,14 +118,14 @@ class Login {
 
         AZauthConnectBTN.addEventListener('click', async () => {
             PopupLogin.openPopup({
-                title: 'En Curso...',
-                content: 'Esperando respuesta de Manti...',
+                title: 'Connexion en cours...',
+                content: 'Veuillez patienter...',
                 color: 'var(--color)'
             });
 
             if (AZauthEmail.value == '' || AZauthPassword.value == '') {
                 PopupLogin.openPopup({
-                    title: 'Error',
+                    title: 'Erreur',
                     content: 'Veuillez remplir tous les champs.',
                     options: true
                 });
@@ -185,7 +136,7 @@ class Login {
 
             if (AZauthConnect.error) {
                 PopupLogin.openPopup({
-                    title: 'Error',
+                    title: 'Erreur',
                     content: AZauthConnect.message,
                     options: true
                 });
@@ -202,14 +153,14 @@ class Login {
 
                 connectAZauthA2F.addEventListener('click', async () => {
                     PopupLogin.openPopup({
-                        title: 'En Curso..',
-                        content: 'Esperando verificacion en 2 pasos...',
+                        title: 'Connexion en cours...',
+                        content: 'Veuillez patienter...',
                         color: 'var(--color)'
                     });
 
                     if (AZauthA2F.value == '') {
                         PopupLogin.openPopup({
-                            title: 'Error',
+                            title: 'Erreur',
                             content: 'Veuillez entrer le code A2F.',
                             options: true
                         });
@@ -220,7 +171,7 @@ class Login {
 
                     if (AZauthConnect.error) {
                         PopupLogin.openPopup({
-                            title: 'Error',
+                            title: 'Erreur',
                             content: AZauthConnect.message,
                             options: true
                         });
@@ -251,6 +202,7 @@ class Login {
                     if (instance.name == instanceSelect) {
                         let newInstanceSelect = instancesList.find(i => i.whitelistActive == false)
                         configClient.instance_selct = newInstanceSelect.name
+                        await setStatus(newInstanceSelect.status)
                     }
                 }
             }

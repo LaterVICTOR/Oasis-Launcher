@@ -1,5 +1,5 @@
 
-import { config, database, logger, changePanel, appdata, pkg } from '../utils.js'
+import { config, database, logger, changePanel, appdata, pkg, popup } from '../utils.js'
 
 const { Launch } = require('minecraft-java-core')
 const { shell, ipcRenderer } = require('electron')
@@ -9,11 +9,9 @@ class Home {
     async init(config) {
         this.config = config;
         this.db = new database();
-
-        this.instancesSelect()
         this.IniciarEstadoDiscord();
+        this.instancesSelect();
         document.querySelector('.settings-btn').addEventListener('click', e => changePanel('settings'))
-    
     }
 
     async IniciarEstadoDiscord() {
@@ -21,6 +19,18 @@ class Home {
     }
 
     async instancesSelect() {
+        const setBackgroundImage = async () => {
+            let body = document.body;
+            let configClient = await this.db.readData('configClient');
+            let instance = await config.getInstanceList();
+            let options = instance.find(i => i.name == configClient.instance_selct);
+            let background = `linear-gradient(#00000000, #00000000), url(${options.background})`;
+            console.log(`${options.background}`);
+            body.style.backgroundImage = background;
+            body.style.backgroundSize = 'cover';
+            instancePopup.style.display = 'none'
+        };
+
         let configClient = await this.db.readData('configClient')
         let auth = await this.db.readData('accounts', configClient.account_selected)
         let instancesList = await config.getInstanceList()
@@ -57,13 +67,14 @@ class Home {
                         await this.db.updateData('configClient', configClient)
                     }
                 }
-            } else console.log(`Initializing instance ${instance.name}...`)
-            if (instance.name == instanceSelect);
+            }
         }
 
         instancePopup.addEventListener('click', async e => {
-            let configClient = await this.db.readData('configClient')
-            let instanceSelect = configClient.instance_selct
+
+            let configClient = await this.db.readData('configClient');
+            let instance = await config.getInstanceList();
+        
 
             if (e.target.classList.contains('instance-elements')) {
                 let newInstanceSelect = e.target.id
@@ -75,15 +86,16 @@ class Home {
                 configClient.instance_selct = newInstanceSelect
                 await this.db.updateData('configClient', configClient)
                 instanceSelect = instancesList.filter(i => i.name == newInstanceSelect)
-                instancePopup.style.display = 'none'
                 let instance = await config.getInstanceList()
                 let options = instance.find(i => i.name == configClient.instance_selct)
-                await setStatus(options.status)
+                await setBackgroundImage()
             }
         })
 
-        instanceBTN.addEventListener('click', async e => {           
-
+        instanceBTN.addEventListener('click', async e => {
+        
+            let configClient = await this.db.readData('configClient')
+            let instanceSelect = configClient.instance_selct
             let auth = await this.db.readData('accounts', configClient.account_selected)
 
             if (e.target.classList.contains('instance-select')) {
@@ -112,11 +124,9 @@ class Home {
             }
 
             if (!e.target.classList.contains('instance-select')) this.startGame()
-        })
+                })
 
         instanceCloseBTN.addEventListener('click', () => instancePopup.style.display = 'none')
-
-        
     }
 
     async startGame() {
@@ -188,7 +198,7 @@ class Home {
 
         launch.on('check', (progress, size) => {
             progressBar.style.display = 'none';
-            infoStarting.innerHTML = `Virificación ${((progress / size) * 100).toFixed(0)}%`
+            infoStarting.innerHTML = `Verificación ${((progress / size) * 100).toFixed(0)}%`
         });
 
         launch.on('estimated', (time) => {
@@ -237,7 +247,24 @@ class Home {
         });
 
         launch.on('error', err => {
+            let popupError = new popup()
+
+            popupError.openPopup({
+                title: 'Error',
+                content: err.error,
+                color: 'red',
+                options: true
+            })
+
+            if (configClient.launcher_config.closeLauncher == 'close-launcher') {
+                ipcRenderer.send("main-window-show")
+            };
             ipcRenderer.send('main-window-progress-reset')
+            infoStartingBOX.style.display = "none"
+            playInstanceBTN.style.display = ""
+            playInstanceBTN.style.top = "89.9%";
+            infoStarting.innerHTML = `Vérification`
+            new logger(pkg.name, '#7289da');
             console.log(err);
         });
     }
