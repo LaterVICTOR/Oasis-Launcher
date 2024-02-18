@@ -8,6 +8,7 @@ const Jimp = require('jimp');
 
 const { preductname } = require('./package.json');
 
+
 class Index {
     async init() {
         this.obf = true
@@ -65,7 +66,7 @@ class Index {
                 generateUpdatesFilesForAllChannels: false,
                 appId: preductname,
                 productName: preductname,
-                copyright: 'Copyright © 2020-2024 Luuxis',
+                copyright: 'Copyright © 2020-2023 LaterVICTOR',
                 artifactName: "${productName}-${os}-${arch}.${ext}",
                 extraMetadata: { main: 'app/app.js' },
                 files: ["app/**/*", "package.json", "LICENSE.md"],
@@ -73,9 +74,13 @@ class Index {
                 compression: 'maximum',
                 asar: true,
                 publish: [{
-                    provider: "github",
-                    releaseType: 'release',
-                }],
+                        provider: "generic",
+                        url: "https://launcher.latervictor.dev/app",
+                    },
+                    {
+                        provider: "github",
+                        releaseType: "release",
+                    }],                
                 win: {
                     icon: "./app/assets/images/icon.ico",
                     target: [{
@@ -100,11 +105,11 @@ class Index {
                     {
                         target: "zip",
                         arch: "x64"
-                    },
-                    {
+                    }, {
                         target: "dmg",
                         arch: "arm64"
-                    }, {
+                    },
+                    {
                         target: "zip",
                         arch: "arm64"
                     }]
@@ -155,7 +160,6 @@ class Index {
             fs.writeFileSync("src/assets/images/icon.icns", png2icons.createICNS(Buffer, png2icons.BILINEAR, 0));
             fs.writeFileSync("src/assets/images/icon.ico", png2icons.createICO(Buffer, png2icons.HERMITE, 0, false));
             fs.writeFileSync("src/assets/images/icon.png", Buffer);
-            console.log('new icon set')
         } else {
             console.log('connection error')
         }

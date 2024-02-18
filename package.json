@@ -1,7 +1,7 @@
 {
     "name": "oasis-developer",
     "preductname": "Oasis Launcher",
-    "version": "2.0.4",
+    "version": "2.0.2",
     "description": "Creado Por LaterVICTOR & Drolet",
     "main": "src/app.js",
     "url": "https://launcher.latervictor.dev/",
