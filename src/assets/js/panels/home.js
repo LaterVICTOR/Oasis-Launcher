@@ -247,15 +247,6 @@ class Home {
         });
 
         launch.on('error', err => {
-            let popupError = new popup()
-
-            popupError.openPopup({
-                title: 'Error',
-                content: err.error,
-                color: 'red',
-                options: true
-            })
-
             if (configClient.launcher_config.closeLauncher == 'close-launcher') {
                 ipcRenderer.send("main-window-show")
             };

@@ -1,7 +1,7 @@
 {
     "name": "oasis-developer",
     "preductname": "Oasis Launcher",
-    "version": "2.0.8",
+    "version": "2.0.9",
     "description": "Creado Por LaterVICTOR & Drolet",
     "main": "src/app.js",
     "url": "https://launcher.latervictor.dev/",
@@ -14,7 +14,7 @@
         "start": "cross-env-shell NODE_ENV=dev electron .",
         "dev": "cross-env-shell DEV_TOOL=open nodemon --exec npm start",
         "build": "node build.js --obf=true --build=platform",
-        "icon": "node build.js --icon=https://raw.githubusercontent.com/luuxis/Selvania-Launcher/master/src/assets/images/icon.png"
+        "icon": "node build.js --icon=https://launcher.latervictor.dev/OASIS_SOLO.png"
     },
     "license": "CCANC",
     "nodemonConfig": {
