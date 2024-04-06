@@ -245,19 +245,6 @@ class Home {
 
             ipcRenderer.send('delete-and-new-status-discord')
         });
-
-        launch.on('error', err => {
-            if (configClient.launcher_config.closeLauncher == 'close-launcher') {
-                ipcRenderer.send("main-window-show")
-            };
-            ipcRenderer.send('main-window-progress-reset')
-            infoStartingBOX.style.display = "none"
-            playInstanceBTN.style.display = ""
-            playInstanceBTN.style.top = "89.9%";
-            infoStarting.innerHTML = `Vérification`
-            new logger(pkg.name, '#7289da');
-            console.log(err);
-        });
     }
 
     getdate(e) {
